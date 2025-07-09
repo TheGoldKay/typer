@@ -1,19 +1,9 @@
 from dataclasses import dataclass, field
 import random, arcade
+from pyglet.graphics import Batch
+from arcade import Text
 from globals import *
 
-class Word:
-    def __init__(self, word: str, pos: list[float]):
-        self.word: str = word
-        self.pos: list[float] = pos
-    
-    @property
-    def x(self) -> float: 
-        return self.pos[0]
-        
-    @x.setter
-    def x(self, value: float) -> None:
-        self.pos[0] = value
         
 @dataclass
 class Game:
@@ -22,34 +12,52 @@ class Game:
     score: int = 0
     lives: int = 3
     range_len: tuple[int, int] = 3, 5 # both ends included
-    max_words: int = 5
+    max_words: int = 20
     gap: int = 100
-    vel_word: int = 100
-    display_words: list[Word] = field(default_factory=list)
+    vel_word: int = 200
+    batch: Batch = field(default_factory=Batch)
+    display_words: list[Text] = field(default_factory=list)
     
     def gen_word(self) -> None:
         if (len(self.display_words) == self.max_words):
             return
         word: str = random.choice(self.word_list)
         # check if it's within the range for length and if there are less than max words allowed
-        if self.range_len[0] <= len(word) <= self.range_len[1]:
+        if self.range_len[0] <= len(word) <= self.range_len[1] and self._is_unique(word):
             self.display_words.append(
-                Word(word, [
+                Text(word, 
                     SCREEN_WIDTH,
-                    random.randint(self.gap, SCREEN_HEIGHT - self.gap)
-                ]))  
+                    random.randint(self.gap, SCREEN_HEIGHT - self.gap), 
+                    batch = self.batch, 
+                    font_size = FONT_SIZE,
+                    color = FONT_COLOR)
+            )     
         else:
             self.gen_word()
+    def _is_unique(self, word: str) -> bool:
+        return word not in self.display_words
     
+    def _word_collision(self, new_word: Text) -> bool:
+        for word in self.display_words[0:-1]:
+            if (
+                new_word.left < word.right and
+                new_word.right > word.left and
+                new_word.bottom < word.top and
+                new_word.top > word.bottom
+            ):
+                return True
+        return False     
+            
     def update(self, dt: float) -> None:
         self.gen_word()
         display_words_copy = self.display_words.copy()
         for i, word in enumerate(self.display_words):
             word.x -= self.vel_word * dt
             if word.x < 0:
-                   del display_words_copy[i]
+                del display_words_copy[i]
         self.display_words = display_words_copy
     
     def draw(self) -> None:
-        for word in self.display_words:
-            arcade.draw_text(word.word, word.x, word.pos[1], arcade.color.WHITE, 20)
+        self.batch.draw()
+        if self._word_collision(self.display_words[-1]):
+            del self.display_words[-1]

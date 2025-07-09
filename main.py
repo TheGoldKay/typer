@@ -7,6 +7,7 @@ If necessary for the sake of clarity Event Handlers (callbacks)
 will be renamed:
     on_draw -> draw
     on_key_press -> keypressed
+    on_update -> update
 """
 
 window: arcade.Window = arcade.Window(800, 600, "Typer", center_window=True)

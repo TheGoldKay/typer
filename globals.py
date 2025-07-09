@@ -4,7 +4,9 @@ __all__ = [
     "SCREEN_WIDTH",
     "SCREEN_HEIGHT",
     "DEFAULT_WORD_LIST",
-    "BG_COLOR"
+    "BG_COLOR", 
+    "FONT_SIZE", 
+    "FONT_COLOR"
 ]
 
 
@@ -56,3 +58,5 @@ DEFAULT_WORD_LIST = ("pull", "limping", "thaw", "placid", "record", "untidy", "t
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 BG_COLOR: Color = Color(1, 50, 32, 255) # DARK_GREEN
+FONT_SIZE: int = 22
+FONT_COLOR: Color = Color(255, 255, 255, 255)
