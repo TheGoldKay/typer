@@ -13,8 +13,8 @@ class Game:
     lives: int = 3
     range_len: tuple[int, int] = 3, 5 # both ends included
     max_words: int = 20
-    gap: int = 100
-    vel_word: int = 200
+    gap: int = FONT_SIZE + 10
+    vel_word: int = 100
     batch: Batch = field(default_factory=Batch)
     display_words: list[Text] = field(default_factory=list)
     
@@ -38,7 +38,7 @@ class Game:
         return word not in self.display_words
     
     def _word_collision(self, new_word: Text) -> bool:
-        for word in self.display_words[0:-1]:
+        for word in self.display_words[:-1]:
             if (
                 new_word.left < word.right and
                 new_word.right > word.left and
