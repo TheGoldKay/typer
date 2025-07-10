@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-import random, arcade
+import random, arcade, math
 from pyglet.graphics import Batch
 from arcade import Text
 from globals import *
@@ -23,18 +23,20 @@ class Game:
             return
         word: str = random.choice(self.word_list)
         # check if it's within the range for length and if there are less than max words allowed
-        if self.range_len[0] <= len(word) <= self.range_len[1] and self._is_unique(word):
-            self.display_words.append(
-                Text(word, 
-                    SCREEN_WIDTH,
+        if self.range_len[0] <= len(word) <= self.range_len[1]:
+            w: Text = Text(word, 
+                    random.randint(SCREEN_WIDTH, SCREEN_WIDTH + self.gap * 15),
                     random.randint(self.gap, SCREEN_HEIGHT - self.gap), 
                     batch = self.batch, 
                     font_size = FONT_SIZE,
                     color = FONT_COLOR)
-            )     
+            if not self._is_unique(w):
+                self.gen_word()
+            else:
+                self.display_words.append(w)
         else:
             self.gen_word()
-    def _is_unique(self, word: str) -> bool:
+    def _is_unique(self, word: Text) -> bool:
         return word not in self.display_words
     
     def _word_collision(self, new_word: Text) -> bool:
@@ -52,7 +54,7 @@ class Game:
         self.gen_word()
         display_words_copy = self.display_words.copy()
         for i, word in enumerate(self.display_words):
-            word.x -= self.vel_word * dt
+            word.x -= math.ceil(self.vel_word * dt)
             if word.x < 0:
                 del display_words_copy[i]
         self.display_words = display_words_copy
