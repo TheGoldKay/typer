@@ -24,10 +24,12 @@ def keypressed(key: int, _: int) -> None:
     # the second argument (modifiers) won't be necessary
     if key == arcade.key.ESCAPE:
         window.close()
+    game.keypressed(key)
 
 @window.event("on_update")
 def update(dt: float) -> None:
     game.update(dt)
     
 if __name__ == "__main__":
+    game.setup()
     window.run()
