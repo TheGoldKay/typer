@@ -94,13 +94,12 @@ class Game:
                     self.display_words[index].value = word.value[1:]
                     return
         else:
-            if self.display_words[self.current_word - 1].empty:
-                del self.display_words[self.current_word - 1]
-                self.current_word = 0
-                return
             word = self.display_words[self.current_word - 1]
             if word.check(key):
                 self.display_words[self.current_word - 1].value = word.value[1:]
+                if self.display_words[self.current_word - 1].empty:
+                    del self.display_words[self.current_word - 1]
+                    self.current_word = 0
                 
     def update(self, dt: float) -> None:
         self.gen_word()

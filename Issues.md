@@ -23,3 +23,10 @@ is to remove any word when: x <= 0, rather than: x < 0, now I made sure it reach
 and it doesn't get stuck at the leftmost corner. 
 
 ##### 4 - At typing (selecting self.current_word), words outside the screen can get selected []
+
+##### 5 - next current_word isn't selected, unable to lock in other words [DONE]
+
+Changed where the check for empty current_word is done to happen right after it has been shorted
+by the keypressed (typing), before it never reached the 'if' statement to check for empty because one
+was already happeing before back to when I was still only considering the current_word as empty since
+None of the words on the screen had been selected yet
