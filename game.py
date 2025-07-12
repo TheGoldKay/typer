@@ -84,11 +84,14 @@ class Game:
                 return True
         return False    
     
+    def _within_bounds(self, word: Word) -> bool:
+        return 0 < word.x < SCREEN_WIDTH and 0 < word.y < SCREEN_HEIGHT
+    
     def keypressed(self, key: int) -> None:
         if not self.current_word:
             for index, word in enumerate(self.display_words):
                 #print(word.value[0], chr(key).lower())
-                if word.value[0] == chr(key).lower():
+                if word.value[0] == chr(key).lower() and self._within_bounds(word):
                     self.current_word = index + 1
                     self.display_words[index].color = HIGHLIGHT_COLOR
                     self.display_words[index].value = word.value[1:]
@@ -100,7 +103,10 @@ class Game:
                 if self.display_words[self.current_word - 1].empty:
                     del self.display_words[self.current_word - 1]
                     self.current_word = 0
-                
+    
+    def _current_word_out_of_bounds(self) -> bool:
+        return not self._within_bounds(self.display_words[self.current_word - 1])
+    
     def update(self, dt: float) -> None:
         self.gen_word()
         display_words_copy = self.display_words.copy()
@@ -109,6 +115,8 @@ class Game:
             if word.x <= 0:
                 del display_words_copy[i]
         self.display_words = display_words_copy
+        if self._current_word_out_of_bounds():
+            self.current_word = 0
     
     def draw(self) -> None:
         self.batch.draw()
