@@ -21,3 +21,5 @@ thus x never lowers below 0 in some cases, depending where the random x placed i
 in the rightmost corner when generated, now I'm using math.floor and also the Check
 is to remove any word when: x <= 0, rather than: x < 0, now I made sure it reaches zero
 and it doesn't get stuck at the leftmost corner. 
+
+##### 4 - At typing (selecting self.current_word), words outside the screen can get selected []

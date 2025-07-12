@@ -6,7 +6,8 @@ __all__ = [
     "DEFAULT_WORD_LIST",
     "BG_COLOR", 
     "FONT_SIZE", 
-    "FONT_COLOR"
+    "FONT_COLOR", 
+    "HIGHLIGHT_COLOR"
 ]
 
 
@@ -60,3 +61,4 @@ SCREEN_HEIGHT = 600
 BG_COLOR: Color = Color(1, 50, 32, 255) # DARK_GREEN
 FONT_SIZE: int = 22
 FONT_COLOR: Color = Color(255, 255, 255, 255)
+HIGHLIGHT_COLOR: Color = Color(255, 0, 0, 255)
