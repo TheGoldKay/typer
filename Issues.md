@@ -40,3 +40,5 @@ None of the words on the screen had been selected yet
 
 The logic above is no longer the cause, it wasn't even when I first wrote it, anyway, current_word is a int
 rather than an empty string
+
+##### 6 - Issue with word selection, must fix by forcing selection to the leftmost
