@@ -30,7 +30,7 @@ class Word(Text):
         self.i = i
     
     def check(self, key: int) -> bool:
-        return self.value[0] == chr(key).lower()
+        return self.value[0] == chr(key)
     
     def copy(self, other: object) -> None:
         if isinstance(other, Word):
@@ -129,11 +129,10 @@ class Game:
         for i, word in enumerate(self.display_words):
             word.x -= math.floor(self.vel_word * dt)
             if word.x <= 0:
+                if i == self.current_word - 1:
+                    self.current_word = 0
                 del display_words_copy[i]
         self.display_words = display_words_copy
-        if self._current_word_out_of_bounds():
-            del self.display_words[self.current_word - 1]
-            self.current_word = 0
     
     def draw(self) -> None:
         self.batch.draw()
