@@ -42,3 +42,5 @@ The logic above is no longer the cause, it wasn't even when I first wrote it, an
 rather than an empty string
 
 ##### 6 - Issue with word selection, must fix by forcing selection to the leftmost
+
+##### 7 - More than one word selected at a time, enforce single selection 

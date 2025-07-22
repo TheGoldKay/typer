@@ -31,6 +31,9 @@ class Word(Text):
     
     def check(self, key: int) -> bool:
         return self.value[0] == chr(key)
+
+    def attack(self) -> None:
+        self.value = self.value[1:]
     
     def copy(self, other: object) -> None:
         if isinstance(other, Word):
@@ -98,7 +101,7 @@ class Game:
         return 0 < word.x < SCREEN_WIDTH and 0 < word.y < SCREEN_HEIGHT
     
     def keypressed(self, key: int) -> None:
-        if not self.current_word:
+        if self.current_word == 0:
             selection: list[Word] = []
             for index, word in enumerate(self.display_words):
                 #print(word.value[0], chr(key).lower())
@@ -108,20 +111,19 @@ class Game:
                     word.color = HIGHLIGHT_COLOR
                     selection.append(word)
             if len(selection) >= 1:
+                #print(selection)
                 leftmost: Word = min(selection, key=lambda w: w.x)
                 self.current_word = leftmost.index + 1
-                print(leftmost.value)
+                #print(leftmost.value)
         else:
             word = self.display_words[self.current_word - 1]
             if word.check(key):
-                self.display_words[self.current_word - 1].value = word.value[1:]
-                if self.display_words[self.current_word - 1].empty:
-                    del self.display_words[self.current_word - 1]
+                word.attack()
+                if word.empty:
+                    del self.display_words[word.index]
                     self.current_word = 0
-
-    
-    def _current_word_out_of_bounds(self) -> bool:
-        return not self._within_bounds(self.display_words[self.current_word - 1])
+                else:
+                    self.display_words[word.index].value = word.value
     
     def update(self, dt: float) -> None:
         self.gen_word()
