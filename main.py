@@ -11,7 +11,6 @@ will be renamed:
 """
 
 window: arcade.Window = arcade.Window(800, 600, "Typer", center_window=True)
-game: Game = Game()
 
 @window.event("on_draw")
 def draw() -> None:
@@ -31,5 +30,6 @@ def update(dt: float) -> None:
     game.update(dt)
     
 if __name__ == "__main__":
+    game: Game = Game()
     game.setup()
     window.run()
