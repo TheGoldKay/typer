@@ -1,5 +1,7 @@
+import random
+import math
+import time
 from dataclasses import dataclass, field
-import random, arcade, math, time
 from pyglet.graphics import Batch
 from arcade import Text
 from word import Word
