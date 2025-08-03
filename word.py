@@ -1,12 +1,15 @@
+import math
 from arcade import Text
 from globals import * 
 
 class Word(Text):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.color = FONT_COLOR
+        #self.color = FONT_COLOR
         self.font_size = FONT_SIZE
         self.i = 0
+        self.in_focus = False
+        self.word_vel = 150
     
     def __eq__(self, other: object) -> bool:
         if isinstance(other, Word): 
@@ -16,6 +19,10 @@ class Word(Text):
     @property
     def empty(self) -> bool:
         return self.value == ""
+    
+    @property
+    def not_empty(self) -> bool:
+        return self.value != ""
     
     @property
     def index(self) -> int:
@@ -33,9 +40,12 @@ class Word(Text):
     
     def copy(self, other: object) -> None:
         if isinstance(other, Word):
-            self.value = other.value[1:]
+            self.i = other.i
             self.x = other.x
             self.y = other.y
-            self.color = HIGHLIGHT_COLOR
         else:
             raise TypeError("Object must be of type Word")
+    
+    def update(self, dt):
+        self.in_focus = not self.empty
+        self.x -= math.floor(self.word_vel * dt)

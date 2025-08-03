@@ -42,5 +42,15 @@ The logic above is no longer the cause, it wasn't even when I first wrote it, an
 rather than an empty string
 
 ##### 6 - Issue with word selection, must fix by forcing selection to the leftmost
-
 ##### 7 - More than one word selected at a time, enforce single selection 
+##### Fix for 6 & 7 
+
+It seems that in the **update** function, during the looping over the words, the copy of the *display_words*
+was being reduced inside the loop, thus in the next iteration the index didn't correspond to the right word
+because the copied display words was shorter than the original one, and thus when using *del self.display_words[index]*
+the index didn't correspond to the right word, and not only that, in the **keypressed** function getting the *self.focus_word.index*
+didn't get the right *focus_word* due to the error mentioned above, therefore I decided to hande the *focus_word* as stand alone
+rather than tracking the index of it on *display_words*. 
+
+In order to avoid problems with index I broke out of the loop in **keypressed** and **update** as soon as either a word was selected or
+a word was deleted. 
