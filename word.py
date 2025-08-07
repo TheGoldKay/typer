@@ -1,9 +1,10 @@
 import math
 from arcade import Text
+from typing import Any
 from globals import * 
 
 class Word(Text):
-    def __init__(self, *args: any, **kwargs: any) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
         #self.color = FONT_COLOR
         self.font_size = FONT_SIZE
