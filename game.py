@@ -21,7 +21,7 @@ class Game:
     display_words: list[Word] = field(default_factory=list)
     
     
-    def setup(self):
+    def setup(self) -> None:
         random.seed(time.time())
         random.shuffle(self.word_list)
         # the first word is set to self.current_word == 1 (not following index 0 convention) 
@@ -63,8 +63,8 @@ class Game:
                 return True
         return False    
     
-    def _within_bounds(self, x, y) -> bool:
-        return 0 < x < SCREEN_WIDTH and 0 < y < SCREEN_HEIGHT
+    def _within_bounds(self, x: int, y: int) -> bool:
+        return (0 < x < SCREEN_WIDTH) and (0 < y < SCREEN_HEIGHT)
     
     def keypressed(self, key: int) -> None:
         #if self.current_word == 0:

@@ -3,7 +3,7 @@ from arcade import Text
 from globals import * 
 
 class Word(Text):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         #self.color = FONT_COLOR
         self.font_size = FONT_SIZE
@@ -46,6 +46,6 @@ class Word(Text):
         else:
             raise TypeError("Object must be of type Word")
     
-    def update(self, dt):
+    def update(self, dt) -> None:
         self.in_focus = not self.empty
         self.x -= math.floor(self.word_vel * dt)
