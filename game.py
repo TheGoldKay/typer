@@ -63,7 +63,7 @@ class Game:
                 return True
         return False    
     
-    def _within_bounds(self, x: int, y: int) -> bool:
+    def _within_bounds(self, x: float, y: float) -> bool:
         return (0 < x < SCREEN_WIDTH) and (0 < y < SCREEN_HEIGHT)
     
     def keypressed(self, key: int) -> None:
