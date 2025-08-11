@@ -75,13 +75,14 @@ class Game:
             for index, word in enumerate(self.display_words):
                 #print(word.value[0], chr(key).lower())
                 #print(chr(key), f"*{word.value}* >-<")
-                if index != self.focus_word.index and word.check(key) and self._within_bounds(word.x, word.y):
+                if word.check(key) and self._within_bounds(word.x, word.y):
+                    print(word.value)
                     word.attack()
                     #word.index = index
                     #word.color = HIGHLIGHT_COLOR
                     #self.focus_word.copy(word)
                     self.focus_word = Word(word.value, word.x, word.y, color = HIGHLIGHT_COLOR, batch = self.batch)
-                    print(word.value)
+                    #print(word.value)
                     del self.display_words[index]
                     break
                     

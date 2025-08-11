@@ -43,7 +43,7 @@ rather than an empty string
 
 ##### 6 - Issue with word selection, must fix by forcing selection to the leftmost
 ##### 7 - More than one word selected at a time, enforce single selection 
-##### Fix for 6 & 7 
+##### Fix for 6 & 7 *[DONE]*
 
 It seems that in the **update** function, during the looping over the words, the copy of the *display_words*
 was being reduced inside the loop, thus in the next iteration the index didn't correspond to the right word
@@ -54,3 +54,10 @@ rather than tracking the index of it on *display_words*.
 
 In order to avoid problems with index I broke out of the loop in **keypressed** and **update** as soon as either a word was selected or
 a word was deleted. 
+
+##### 8 - Words too close to the left side are not being selected
+
+In keypressed it was still being checked in the loop if the word was the current one selected, if it was (an empty one at this point),
+it just ignored it and continued looping, but it creates the problem that the word at index one is never selected, since the Word
+class sets the index self.i to standard value of 0, now by removing the check since it's no longer necessay due to changes in the 
+logic of the game architecture it's now possible to select the words at the forefront. 
