@@ -1,6 +1,6 @@
 import math
 from arcade import Text
-from typing import Any
+from typing import Any, Self
 from globals import * 
 
 class Word(Text):
@@ -39,9 +39,10 @@ class Word(Text):
     def attack(self) -> None:
         self.value = self.value[1:]
     
-    def copy(self, other: object) -> None:
+    def copy(self, other: "Word") -> None:
         if isinstance(other, Word):
-            self.i = other.i
+            #self.i = other.i
+            self.value = other.value
             self.x = other.x
             self.y = other.y
         else:

@@ -26,7 +26,7 @@ class Game:
         random.shuffle(self.word_list)
         # the first word is set to self.current_word == 1 (not following index 0 convention) 
         self.current_word: int = 0 
-        self.focus_word: Word = Word("", 0, 0)
+        self.focus_word: Word = Word("", 0, 0, color = HIGHLIGHT_COLOR, batch = self.batch)
         self.gen_word()
         
     def gen_word(self) -> None:
@@ -76,12 +76,13 @@ class Game:
                 #print(word.value[0], chr(key).lower())
                 #print(chr(key), f"*{word.value}* >-<")
                 if word.check(key) and self._within_bounds(word.x, word.y):
-                    print(word.value)
+                    #print(word.value)
                     word.attack()
                     #word.index = index
                     #word.color = HIGHLIGHT_COLOR
                     #self.focus_word.copy(word)
-                    self.focus_word = Word(word.value, word.x, word.y, color = HIGHLIGHT_COLOR, batch = self.batch)
+                    #self.focus_word = Word(word.value, word.x, word.y, color = HIGHLIGHT_COLOR, batch = self.batch)
+                    self.focus_word.copy(word)
                     #print(word.value)
                     del self.display_words[index]
                     break
